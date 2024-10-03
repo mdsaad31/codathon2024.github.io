@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stock Market Simulator</title>
+    <link rel="stylesheet" type="text/css" href="sim.css">
+  </head>
+  <body>
+        <nav>
+      <ul>
+        <li class="balance"><a href="#">Balance: <span id="balance">$5000</span></a></li>
+      </ul>
+    </nav>
+    <div class="container">
+      <div class="stock">
+        <h2>Apple</h2>
+        <p>Price: <span id="apple-price">$10</span></p>
+        <p>Quantity: <span id="apple-stock">10</span></p>
+        <p>Current Value: <span id="apple-value">$45</span></p>
+        <canvas id="apple-chart"></canvas>
+        <a href="buy.html"><button class="buy-button" onclick="buyStock('apple')">Buy</button></a>
+        <a href="buy.html"><button class="sell-button" onclick="sellStock('apple')">Sell</button></a>
+      </div>
+      <div class="stock">
+        <h2>Amazon</h2>
+        <p>Price: <span id="amazon-price">$15</span></p>
+        <p>Quantity: <span id="amazon-stock">0</span></p>
+        <p>Current Value: <span id="amazon-value">$34</span></p>
+        <canvas id="amazon-chart"></canvas>
+        <a href="buy.html"><button class="buy-button" onclick="buyStock('amazon')">Buy</button></a>
+        <a href="buy.html"><button class="sell-button" onclick="sellStock('amazon')">Sell</button></a>
+      </div>
+      <div class="stock">
+        <h2>Microsoft</h2>
+        <p>Price: <span id="microsoft-price">$20</span></p>
+        <p>Quantity: <span id="microsoft-stock">0</span></p>
+        <p>Current Value: <span id="microsoft-value">$19.5</span></p>
+        <canvas id="microsoft-chart"></canvas>
+        <a href="buy.html"><button class="buy-button" onclick="buyStock('microsoft')">Buy</button></a>
+        <a href="buy.html"><button class="sell-button" onclick="sellStock('microsoft')">Sell</button></a> </div>
+
+    </div>
+
+  </body>
+</html>

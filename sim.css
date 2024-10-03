@@ -1,0 +1,223 @@
+nav {
+    background-color: #333;
+    overflow: hidden;
+    height: 50px;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  a{
+    text-decoration: none;
+  }
+
+  nav li {
+    float: left;
+  }
+  
+  nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+  }
+  nav li.balance {
+    float: right;
+    line-height: 50px;
+    pointer-events: none;
+  }
+  
+  nav li.balance a {
+    padding-right: 30px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    line-height: 2px;
+    pointer-events: none;
+  }
+  
+  body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #4B4949, #262626);
+        color: #FFFFFF;
+        text-shadow: 2px 2px #000000;
+      }
+      
+      a {
+        color: #FFFFFF;
+        transition: color 0.5s ease;
+      }
+      
+      a:hover {
+        color: #FF0000;
+      }
+  
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    color: #00529b;
+    letter-spacing: 0.1em;
+    margin: 0;
+    position: relative;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+  }
+  
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 1em;
+  }
+  
+  .stock {
+    background-color: rgba(31, 31, 31, 0.20);
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 5px;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+    flex-basis: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  
+  .stock h2 {
+    font-size: 1.2em;
+    margin-top: 0;
+    color: #FFFFFF;
+  }
+  
+  .stock p {
+    margin: 0.5em 0;
+    color: #FFFFFF;
+  }
+  
+  .stock canvas {
+    width: 100%;
+    height: auto;
+    margin-top: 1em;
+  }
+  
+  
+  .balance {
+    background-color: #1f1f1f;
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 5px;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+    flex-basis: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .balance h2 {
+    font-size: 1em;
+    margin-top: 0;
+    color: #FFFFFF;
+  }
+  
+  .balance p {
+    margin: 0.25em 0;
+    font-size: 1em;
+    font-weight: bold;
+    color: #FFFFFF;
+  }
+  
+  .notification {
+    background-color: rgba(255, 0, 0, 0.99);
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    max-width: 300px;
+    max-height: 50px;
+    padding: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    z-index: 9999;
+  }
+  
+  
+  
+  .buy-button, .sell-button {
+    background-color: green;
+    color: white;
+    border: none;
+    font-size: 20px;
+    padding: 15px 30px;
+    margin-top: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
+  }
+  
+  .sell-button {
+    background-color: red;
+  
+  }
+  
+  .buy-button:active, .sell-button:active {
+    transform: translateY(2px);
+  }
+  
+  .stock button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .stock button:nth-child(2) {
+    margin-top: 10px;
+  }
+  
+  @keyframes ticker {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  
+  
+  @media screen and (max-width: 600px) {
+    .container {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .stock, .balance {
+      flex-basis: 100%;
+    }
+    
+    .buy-button, .sell-button {
+      font-size: 16px;
+      padding: 10px 20px;
+    }
+  }
+  
+  .stock:hover, .balance:hover {
+    background-color: #2f2f2f;
+    cursor: pointer;
+  }
+  
