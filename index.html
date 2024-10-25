@@ -3,15 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
-    <link rel="stylesheet" href="index.css">
+    <title>Home</title>
+    <style>
+        body {
+            background: #1a1a1a; /* Dark background */
+            margin: 0;
+            font-family: sans-serif;
+            color: white; /* Default text color */
+        }
+
+        header {
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            justify-content: center; /* Center the navbar */
+            align-items: center;
+            background-color: #333; /* Dark header background */
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            background-color: #444; /* Dark navbar background */
+            padding: 10px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px; /* Space between items */
+        }
+
+        nav ul li {
+            list-style: none;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            padding: 5px 10px;
+        }
+
+        nav a:hover {
+            background-color: white;
+            color: black;
+            border-radius: 20px;
+            padding: 5px 10px;
+            backdrop-filter: blur(2px);
+        }
+
+        .content {
+            text-align: center;
+            margin-top: 150px;
+        }
+
+        .content h1 {
+            font-size: 55px;
+            color: white; /* Change header color to white */
+            font-weight: 900;
+            transition: 0.4s;
+            text-shadow: 2px 2px 2px #000; /* Add shadow for better visibility */
+        }
+
+        .content h1:hover {
+            -webkit-text-stroke: 1.5px black;
+            color: transparent;
+            transform: translate(0, 0) scale(1.2);
+        }
+
+        .content a {
+            text-decoration: none;
+            display: inline-block;
+            color: white; /* Change link color to white */
+            font-size: 20px;
+            border: 1px solid white; /* Change border color to white */
+            padding: 8px 50px;
+            border-radius: 50px;
+            margin-top: 20px;
+        }
+
+        .content a:hover {
+            transform: translate(0, 0) scale(1.3);
+        }
+
+        /* Hamburger menu styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .bar {
+            height: 3px;
+            width: 25px;
+            background-color: white; /* Change hamburger icon color to white */
+            margin: 3px 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 40px; /* Smaller font size for mobile */
+            }
+
+            .content a {
+                padding: 8px 30px; /* Adjust padding for mobile */
+            }
+
+            nav ul {
+                flex-direction: column; /* Stack nav items vertically on small screens */
+                display: none; /* Hide by default */
+                position: absolute;
+                background-color: #444; /* Dark navbar background */
+                top: 60px; /* Position below the header */
+                left: 0;
+                width: 100%;
+                padding: 10px 0;
+                border-radius: 0 0 10px 10px;
+            }
+
+            nav.active ul {
+                display: flex; /* Show when active */
+            }
+
+            .hamburger {
+                display: flex; /* Show hamburger icon on mobile */
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <div class="logo">
-            <p>Logo</p>
+        <div class="hamburger" onclick="toggleNav()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
         </div>
-        <nav>
+        <nav id="navbar">
             <ul>
                 <li><a href="sim.html">Game</a></li>
                 <li><a href="resource.html">Resources</a></li>
@@ -19,13 +148,17 @@
                 <li><a href="login.html">Log-in</a></li>
             </ul>
         </nav>
-        <div class="transaction">
-            <a href="transaction.html">Transactions</a>
-        </div>
     </header>
-        <div class="content">
-            <h1>Start investing with a Demo account </h1>
-            <a href="sim.html">START</a>
-        </div>
+    <div class="content">
+        <h1>Start investing with a Demo account</h1>
+        <a href ="sim.html">START</a>
+    </div>
+
+    <script>
+        function toggleNav() {
+            const navbar = document.getElementById("navbar");
+            navbar.classList.toggle("active");
+        }
+    </script>
 </body>
 </html>
