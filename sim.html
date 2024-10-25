@@ -1,44 +1,205 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <title>Stock Market Simulator</title>
-    <link rel="stylesheet" type="text/css" href="sim.css">
-  </head>
-  <body>
-        <nav>
-      <ul>
-        <li class="balance"><a href="#">Balance: <span id="balance">$5000</span></a></li>
-      </ul>
-    </nav>
-    <div class="container">
-      <div class="stock">
-        <h2>Apple</h2>
-        <p>Price: <span id="apple-price">$10</span></p>
-        <p>Quantity: <span id="apple-stock">10</span></p>
-        <p>Current Value: <span id="apple-value">$45</span></p>
-        <canvas id="apple-chart"></canvas>
-        <a href="buy.html"><button class="buy-button" onclick="buyStock('apple')">Buy</button></a>
-        <a href="buy.html"><button class="sell-button" onclick="sellStock('apple')">Sell</button></a>
-      </div>
-      <div class="stock">
-        <h2>Amazon</h2>
-        <p>Price: <span id="amazon-price">$15</span></p>
-        <p>Quantity: <span id="amazon-stock">0</span></p>
-        <p>Current Value: <span id="amazon-value">$34</span></p>
-        <canvas id="amazon-chart"></canvas>
-        <a href="buy.html"><button class="buy-button" onclick="buyStock('amazon')">Buy</button></a>
-        <a href="buy.html"><button class="sell-button" onclick="sellStock('amazon')">Sell</button></a>
-      </div>
-      <div class="stock">
-        <h2>Microsoft</h2>
-        <p>Price: <span id="microsoft-price">$20</span></p>
-        <p>Quantity: <span id="microsoft-stock">0</span></p>
-        <p>Current Value: <span id="microsoft-value">$19.5</span></p>
-        <canvas id="microsoft-chart"></canvas>
-        <a href="buy.html"><button class="buy-button" onclick="buyStock('microsoft')">Buy</button></a>
-        <a href="buy.html"><button class="sell-button" onclick="sellStock('microsoft')">Sell</button></a> </div>
-
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Trading Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #2a2a2a;
+            border-bottom: 1px solid #444;
+        }
+        .header .title {
+            font-size: 18px;
+        }
+        .header .balance {
+            font-size: 18px;
+        }
+        .header .deposit-btn {
+            background-color: #ffcc00;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .main {
+            display: flex;
+            height: calc(100vh - 50px);
+        }
+        .chart {
+            flex: 3;
+            background-color: #1a1a1a;
+            border-right: 1px solid #444;
+            position: relative;
+        }
+        .sidebar {
+            flex: 1;
+            background-color: #2a2a2a;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .sidebar .info {
+            margin-bottom: 20px;
+        }
+        .sidebar .info div {
+            margin-bottom: 10px;
+        }
+        .sidebar .info .time,
+        .sidebar .info .investment,
+        .sidebar .info .payout,
+        .sidebar .info .quantity {
+            font-size: 16px;
+        }
+        .sidebar .actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        .sidebar .actions .btn {
+            flex: 1;
+            padding: 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+        .sidebar .actions .btn.green {
+            background-color: #28a745;
+            color: #fff;
+            margin-right: 10px;
+        }
+        .sidebar .actions .btn.red {
+            background-color: #dc3545;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">EUR / USD</div>
+        <div class="balance" id="balance">$1,000.00</div>
+        <button class="deposit-btn" onclick="makeDeposit()">+ Make deposit</button>
     </div>
+    <div class="main">
+        <div class="chart">
+            <canvas id="tradingChart"></canvas>
+        </div>
+        <div class="sidebar">
+            <div class="info">
+                <div class="time" id="time">Time: 12:30</div>
+                <div class="investment" id="investment">Investment: $50</div>
+                <div class="quantity" id="quantity">Quantity: 1</div>
+                <div class="payout" id="payout">Payout: $85.34</div>
+            </div>
+            <div class="actions">
+                <button class="btn green" onclick="buy()">BUY</button>
+                <button class="btn red" onclick="sell()">SELL</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const ctx = document.getElementById('tradingChart').getContext('2d');
+        const initialData = Array.from({length: 20}, () => Math.random() * 100);
+        const tradingChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 20}, (_, i) => i + 1),
+                datasets: [{
+                    label: 'EUR/USD',
+                    data: initialData,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
 
-  </body>
+        let balance = 1000;
+        let investment = 50;
+        let quantity = 1;
+        let lastValue = initialData[initialData.length - 1];
+
+        function updateChart() {
+            const newValue = lastValue + (Math.random() - 0.5) * 20; // Increased deviation
+            tradingChart.data.datasets[0].data.push(newValue);
+            tradingChart.data.datasets[0].data.shift();
+            tradingChart.update();
+            lastValue = newValue;
+
+            // Update payout value
+            const payout = (investment * (1 + (newValue / 100))).toFixed(2);
+            document.getElementById('payout').innerText = `Payout: $${payout}`;
+        }
+
+        function buy() {
+            const currentValue = lastValue;
+            if (balance >= currentValue) {
+                balance -= currentValue;
+                investment += currentValue;
+                quantity += 1;
+                document.getElementById('balance').innerText = `$${balance.toFixed(2)}`;
+                document.getElementById('investment').innerText = `Investment: $${investment.toFixed(2)}`;
+                document.getElementById('quantity').innerText = `Quantity: ${quantity}`;
+                alert(`Buy action successful! New balance: $${balance.toFixed(2)}`);
+            } else {
+                alert('Insufficient balance to make the investment.');
+            }
+        }
+
+        function sell() {
+            const currentValue = lastValue;
+            if (quantity > 0) {
+                balance += currentValue;
+                investment -= currentValue;
+                quantity -= 1;
+                document.getElementById('balance').innerText = `$${balance.toFixed(2)}`;
+                document.getElementById('investment').innerText = `Investment: $${investment.toFixed(2)}`;
+                document.getElementById('quantity').innerText = `Quantity: ${quantity}`;
+                alert(`Sell action successful! New balance: $${balance.toFixed(2)}`);
+            } else {
+                alert('No shares to sell.');
+            }
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('time').innerText = `Time: ${timeString}`;
+        }
+
+        function makeDeposit() {
+            const depositAmount = parseFloat(prompt("Enter deposit amount:"));
+            if (!isNaN(depositAmount) && depositAmount > 0) {
+                balance += depositAmount;
+                document.getElementById('balance').innerText = `$${balance.toFixed(2)}`;
+                alert(`Deposit successful! New balance: $${balance.toFixed(2)}`);
+            } else {
+                alert("Invalid deposit amount");
+            }
+        }
+
+        setInterval(updateChart, 10000);
+        setInterval(updateTime, 1000);
+    </script>
+</body>
 </html>
